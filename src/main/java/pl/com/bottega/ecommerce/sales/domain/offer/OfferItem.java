@@ -19,16 +19,19 @@ import java.util.Objects;
 public class OfferItem {
 
     // product
-    private String productId;
+    //private String productId;
 
     private BigDecimal productPrice;
-
+/*
     private String productName;
 
     private Date productSnapshotDate;
 
     private String productType;
 
+    */
+    Product  product = new Product();
+    
     private int quantity;
 
     private BigDecimal totalCost;
@@ -40,11 +43,10 @@ public class OfferItem {
 
     private BigDecimal discount;
 
-    public OfferItem(String productId, BigDecimal productPrice, String productName, Date productSnapshotDate, String productType,
-            int quantity) {
-        this(productId, productPrice, productName, productSnapshotDate, productType, quantity, null, null);
+    public OfferItem(Product product, BigDecimal productPrice, int quantity) {
+        this(product, productPrice, quantity, null, null);
     }
-
+/*
     public OfferItem(String productId, BigDecimal productPrice, String productName, Date productSnapshotDate, String productType,
             int quantity, BigDecimal discount, String discountCause) {
         this.productId = productId;
@@ -65,7 +67,27 @@ public class OfferItem {
         this.totalCost = productPrice.multiply(new BigDecimal(quantity))
                                      .subtract(discountValue);
     }
+*/
+    
+    
+    public OfferItem(Product product, BigDecimal productPrice,
+            int quantity, BigDecimal discount, String discountCause) {
+        this.product = product;
+        this.productPrice = productPrice;
+        this.quantity = quantity;
+        this.discount = discount;
+        this.discountCause = discountCause;
 
+        BigDecimal discountValue = new BigDecimal(0);
+        if (discount != null) {
+            discountValue = discountValue.add(discount);
+        }
+
+        this.totalCost = productPrice.multiply(new BigDecimal(quantity))
+                                     .subtract(discountValue);
+    }
+    
+    /*
     public String getProductId() {
         return productId;
     }
@@ -85,7 +107,7 @@ public class OfferItem {
     public String getProductType() {
         return productType;
     }
-
+*/
     public BigDecimal getTotalCost() {
         return totalCost;
     }
@@ -106,11 +128,12 @@ public class OfferItem {
         return quantity;
     }
 
-    @Override
+   /* @Override
     public int hashCode() {
-        return Objects.hash(currency, discount, discountCause, productId, productName, productPrice, productSnapshotDate, productType,
-                quantity, totalCost);
-    }
+        return Objects.hash(currency, discount, discountCause, product, productPrice, quantity, totalCost);
+    }*/
+    
+    
 
     @Override
     public boolean equals(Object obj) {
@@ -127,14 +150,18 @@ public class OfferItem {
         return Objects.equals(currency, other.currency)
                && Objects.equals(discount, other.discount)
                && Objects.equals(discountCause, other.discountCause)
-               && Objects.equals(productId, other.productId)
-               && Objects.equals(productName, other.productName)
+               && Objects.equals(product, other.product)
                && Objects.equals(productPrice, other.productPrice)
-               && Objects.equals(productSnapshotDate, other.productSnapshotDate)
-               && Objects.equals(productType, other.productType)
                && quantity == other.quantity
                && Objects.equals(totalCost, other.totalCost);
     }
+
+    @Override
+    public int hashCode() {
+        // TODO Auto-generated method stub
+        return super.hashCode();
+    }
+
 
     /**
      *
@@ -151,24 +178,11 @@ public class OfferItem {
         } else if (!productPrice.equals(other.productPrice)) {
             return false;
         }
-        if (productName == null) {
-            if (other.productName != null) {
+        if (product == null) {
+            if (other.product != null) {
                 return false;
             }
-        } else if (!productName.equals(other.productName)) {
-            return false;
-        }
-
-        if (productId == null) {
-            if (other.productId != null) {
-                return false;
-            }
-        } else if (!productId.equals(other.productId)) {
-            return false;
-        }
-        if (productType != other.productType) {
-            return false;
-        }
+        } 
 
         if (quantity != other.quantity) {
             return false;
