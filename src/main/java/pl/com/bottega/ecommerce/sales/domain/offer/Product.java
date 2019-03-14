@@ -15,23 +15,18 @@ public class Product {
     private Date SnapshotDate;
 
     private String Type;
+    
+    private Money Price;
 
-    
-    
-    public Product() {
-        // TODO Auto-generated constructor stub
-    }
-    
-    public Product(String id, String name, Date snapshotDate, String type) {
+    public Product(String id, String name, Date snapshotDate, String type, Money price) {
         super();
         Id = id;
         Name = name;
         SnapshotDate = snapshotDate;
         Type = type;
+        Price = price;
     }
 
-    
-    
     
     @Override
     public int hashCode() {
@@ -39,10 +34,12 @@ public class Product {
         int result = 1;
         result = prime * result + ((Id == null) ? 0 : Id.hashCode());
         result = prime * result + ((Name == null) ? 0 : Name.hashCode());
+        result = prime * result + ((Price == null) ? 0 : Price.hashCode());
         result = prime * result + ((SnapshotDate == null) ? 0 : SnapshotDate.hashCode());
         result = prime * result + ((Type == null) ? 0 : Type.hashCode());
         return result;
     }
+
 
     @Override
     public boolean equals(Object obj) {
@@ -63,6 +60,11 @@ public class Product {
                 return false;
         } else if (!Name.equals(other.Name))
             return false;
+        if (Price == null) {
+            if (other.Price != null)
+                return false;
+        } else if (!Price.equals(other.Price))
+            return false;
         if (SnapshotDate == null) {
             if (other.SnapshotDate != null)
                 return false;
@@ -75,6 +77,7 @@ public class Product {
             return false;
         return true;
     }
+
 
     public String getId() {
         return Id;
@@ -114,8 +117,21 @@ public class Product {
     public void setType(String type) {
         Type = type;
     }
+
+    
+    public Money getPrice() {
+        return Price;
+    }
+
+    
+    public void setPrice(Money price) {
+        Price = price;
+    }
+    
+
     
     
+   
 
     
 }
